@@ -1,34 +1,18 @@
 const assert = require("assert");
 
 const Node = (operator, value, left, right) => {
+
   const result = function () {
-    switch (this.operator) {
-      case "+":
-        return left.result() + right.result();
-      case "-":
-        return left.result() - right.result();
-      case "x":
-        return left.result() * right.result();
-      case "÷":
-        return left.result() / right.result();
-      default:
-        return value;
-    }
+      if(this.operator == "") return value;
+      else if(this.operator == "+") return left.result() + right.result();
+      else if(this.operator == "-") return left.result() - right.result();
+      else if(this.operator == "x") return left.result() * right.result();
+      else if(this.operator == "÷") return left.result() / right.result();
   };
 
   const toString = function () {
-    switch (this.operator) {
-      case "+":
-        return `(${left.toString()} + ${right.toString()})`;
-      case "-":
-        return `(${left.toString()} - ${right.toString()})`;
-      case "x":
-        return `(${left.toString()} x ${right.toString()})`;
-      case "÷":
-        return `(${left.toString()} ÷ ${right.toString()})`;
-      default:
-        return value.toString();
-    }
+    if(this.operator == "") return value.toString();
+    return `(${left.toString()} ${this.operator} ${right.toString()})`;
   };
 
   return {
@@ -59,4 +43,6 @@ const tree = Node(
 );
 
 assert.strictEqual("((7 + ((3 - 2) x 5)) ÷ 6)", tree.toString());
+console.log(tree.toString());
+console.log(tree.result());
 assert.strictEqual(2, tree.result());
